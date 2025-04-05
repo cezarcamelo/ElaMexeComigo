@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Envelope Animado</title>
+  <style>
+    body {
+      background: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .envelope-container {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border: 2px solid #333;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    /* Flap com dobra triangular, imitando a frente de um envelope de cartas */
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #e8e8e8;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.8s ease;
+      z-index: 2;
+      border-bottom: 2px solid #333;
+    }
+    /* Ao abrir, o flap gira em 180° */
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+    /* Selo no canto superior direito com um coração no centro */
+    .stamp {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ffcc00, #ff9900);
+      border: 2px solid #333;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    .stamp svg {
+      width: 30px;
+      height: 30px;
+      fill: #e60073;
+    }
+    /* Texto na frente inferior do envelope */
+    .caption {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 1em;
+      color: #333;
+      z-index: 4;
+      transition: opacity 0.5s ease;
+    }
+    /* Oculta o caption quando o envelope está aberto */
+    .envelope.open .caption {
+      opacity: 0;
+    }
+    /* Mensagem interna */
+    .message {
+      position: absolute;
+      top: 55%;
+      left: 10%;
+      right: 10%;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 1;
+    }
+    /* Exibe a mensagem quando o envelope é aberto */
+    .envelope.open .message {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .message p {
+      margin: 0;
+    }
+    /* Assinatura em fonte menor e cor cinza escura */
+    .signature {
+      font-size: 0.8em;
+      color: #555;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="envelope-container" onclick="toggleEnvelope()">
+    <div class="envelope" id="envelope">
+      <div class="flap"></div>
+      <div class="stamp">
+        <!-- SVG do coração -->
+        <svg viewBox="0 0 32 29.6" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.6,0c-2.9,0-5.6,1.6-7,4c-1.4-2.4-4.1-4-7-4C4.4,0,0,4.4,0,9.8
+                   c0,5.8,5.4,10.4,13.6,17.8c0.4,0.4,1,0.4,1.4,0C26.6,20.2,32,15.6,32,9.8C32,4.4,27.6,0,23.6,0z"/>
+        </svg>
+      </div>
+      <div class="caption">Clicar durante o Pomodoro.</div>
+      <div class="message">
+        <p>Você é GATA!</p>
+        <br>
+        <p class="signature">- Superboy.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleEnvelope() {
+      document.getElementById('envelope').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
